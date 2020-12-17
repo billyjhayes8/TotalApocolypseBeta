@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         InvokeRepeating("SpawnCrawler", spawnDelay, spawnInterval);
 
-        InvokeRepeating("SpawnFire", 0, 2.0f);
+        //***** SPAWN FIRE ***** UNCOMMENT WHEN NEEDED ***** \\ InvokeRepeating("SpawnFire", 0, 2.0f);
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     //This will spawn fire in random places within a certain space
     void SpawnFire()
     {
-        Vector3 fireSpawn = new Vector3(Random.Range(-3.5f, 3.5f), .25f, Random.Range(7.5f, 15.5f));
+        Vector3 fireSpawn = new Vector3(Random.Range(-3.5f, 3.5f), .25f, Random.Range(10.0f, 15.0f));
 
         Instantiate(fire, fireSpawn, Quaternion.identity);
     }

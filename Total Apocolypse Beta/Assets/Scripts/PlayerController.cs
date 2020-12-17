@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 
     //public Animator anim;
 
+    private float propellForce = 2.0f;
     private Rigidbody playerRb;
     private GameManager gameManager;
 
@@ -101,6 +102,14 @@ public class PlayerController : MonoBehaviour
         if(collision.gameObject.CompareTag("Win Zone"))
         {
             gameManager.WinGame();
+        }
+
+        if (collision.gameObject.CompareTag("Zombie Vertical") || collision.gameObject.CompareTag("Zombie Horizontal")|| collision.gameObject.CompareTag("Crawler"))
+        {
+            Rigidbody enemyRigidbody = collision.gameObject.GetComponent<Rigidbody>();
+            Vector3 awayFromPlayer = transform.position - collision.gameObject.transform.position;
+
+            playerRb.AddForce(awayFromPlayer * propellForce, ForceMode.Impulse);
         }
     }
 }
