@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         InvokeRepeating("SpawnCrawler", spawnDelay, spawnInterval);
 
-        InvokeRepeating("SpawnFire", 0, 2.0f);
+        //InvokeRepeating("SpawnFire", 0, 2.0f);
     }
 
     // Update is called once per frame
@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         if (health <= 0)
         {
             isGameActive = false;
+            healthText.gameObject.SetActive(false);
         }
     }
 
