@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
 
         InvokeRepeating("SpawnCrawler", spawnDelay, spawnInterval);
 
-        //***** SPAWN FIRE ***** UNCOMMENT WHEN NEEDED ***** \\ InvokeRepeating("SpawnFire", 0, 2.0f);
+        InvokeRepeating("SpawnFire", 0, 2.0f);
     }
 
     // Update is called once per frame
