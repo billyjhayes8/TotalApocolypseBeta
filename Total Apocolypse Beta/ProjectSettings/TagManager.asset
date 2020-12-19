@@ -12,6 +12,8 @@ TagManager:
   - Crawler
   - Dark Entrance
   - Left Wall
+  - Fire
+  - Zombie Diagonal
   layers:
   - Default
   - TransparentFX

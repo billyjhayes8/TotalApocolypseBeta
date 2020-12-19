@@ -8,6 +8,6 @@ public class DestroyObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 5); // destroy particle after 5 seconds
+        Destroy(gameObject, 8); // destroy particle after X seconds
     }
 }

@@ -32,6 +32,11 @@ public class Zombie : MonoBehaviour
         { 
             CrawlerMovement();
         }
+
+        if (gameObject.CompareTag("Zombie Diagonal"))
+        {
+            MoveDiagonal();
+        }
     }
 
     // Tells the crawlers to move
