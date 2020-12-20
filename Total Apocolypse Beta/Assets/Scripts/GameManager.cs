@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private float spawnDelay = 2.0f;
     private float spawnInterval = 2.0f;
 
-    private string url = "https://github.com/billyjhayes8/TotalApocolypse";
+    private string url = "https://github.com/billyjhayes8/TotalApocolypseBeta";
 
     private void Start()
     {
@@ -31,14 +31,13 @@ public class GameManager : MonoBehaviour
 
         InvokeRepeating("SpawnCrawler", spawnDelay, spawnInterval);
 
-        //InvokeRepeating("SpawnFire", 0, 2.0f);
+        InvokeRepeating("SpawnFire", 0, 2.0f);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //sets the UI health variable to the same value as the playerController health
-        //health = playerController.health;
 
         UpdateHealth();
 
@@ -113,6 +112,7 @@ public class GameManager : MonoBehaviour
         startPanel.gameObject.SetActive(false);
     }
 
+    //This will quit the game 
     public void QuitGame()
     {
         Application.Quit();

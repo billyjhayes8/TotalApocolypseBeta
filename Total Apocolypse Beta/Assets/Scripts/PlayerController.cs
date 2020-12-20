@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public float jummpForce = 2.5f;
     public bool isOnGround = true;
     public float health = 100.0f;
+    public TextMeshProUGUI healthBoostText;
+    public AudioSource powerUpSound;
 
     //public Animator anim;
 
@@ -24,6 +28,8 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody>();
 
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+
+        powerUpSound = GetComponent<AudioSource>();
 
     }
 
@@ -62,39 +68,59 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Collision detection - whether or not player is on ground + hits enemy so health can be updated
-    // +  when health is 0 then destroy player and end game
+    //Displays the health boost text for 3 seconds then sets the objects activity to false
+    IEnumerator powerUpTextCountdown()
+    {
+        yield return new WaitForSeconds(3);
+        healthBoostText.gameObject.SetActive(false);
+    }
+
+    //Collision detection
     private void OnCollisionEnter(Collision collision)
     {
+        //If the player is on the ground, sets the speed
         if (collision.gameObject.CompareTag("Ground"))
         {
             isOnGround = true;
             speed = 50.0f;
         }
 
+        //If the player hits a normal zombie, it minuses 15 from health
         if (collision.gameObject.CompareTag("Zombie Vertical") || collision.gameObject.CompareTag("Zombie Horizontal"))
-        {
-            health -= 10;
-        }
-
-        if (collision.gameObject.CompareTag("Crawler"))
         {
             health -= 15;
         }
 
-        if (collision.gameObject.CompareTag("Fire"))
+        //If player hits crawler zombie, it minuseds 20
+        if (collision.gameObject.CompareTag("Crawler"))
         {
             health -= 20;
         }
 
-        if(health <= 0 || collision.gameObject.CompareTag("Dark Entrance"))
+        //If player hits the fire, minuses 30 from health
+        if (collision.gameObject.CompareTag("Fire"))
+        {
+            health -= 30;
+        }
+
+        //If the player ends up in a crawler dark entrance, destroys the player + ends game
+        if (health <= 0)
         {
             Destroy(gameObject);
             gameManager.GameOver();
         }
 
+        //If the player hits the power up, adds 10 health + plays the power up sound
+        if (collision.gameObject.CompareTag("Power Up"))
+        {
+            health += 10.0f;
+            healthBoostText.gameObject.SetActive(true);
+            powerUpSound.Play();
+            StartCoroutine(powerUpTextCountdown());
+        }
+
         // Once the player touches the win zone (Evac Zone) area, the game will end and declare the player the winner
-        if(collision.gameObject.CompareTag("Win Zone"))
+        if (collision.gameObject.CompareTag("Win Zone"))
         {
             gameManager.WinGame();
         }

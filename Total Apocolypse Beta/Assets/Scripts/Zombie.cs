@@ -7,12 +7,15 @@ public class Zombie : MonoBehaviour
 {
     //Variables
     public float zombieSpeed,crawlerSpeed, xMin, xMax, zMin, zMax, yPos = 0.25f;
+    public AudioSource attackSound;
 
     // Start is called before the first frame update
     void Start()
     {
         zombieSpeed = Random.Range(2.0f, 4.0f);
         crawlerSpeed = Random.Range(1.0f, 2.5f);
+
+        attackSound = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -54,7 +57,7 @@ public class Zombie : MonoBehaviour
     void MoveVertical()
     {
         //Move the enemy back and forth along the x axis
-       transform.position = new Vector3(Mathf.PingPong(Time.time * zombieSpeed, 3), transform.position.y, transform.position.z);
+       transform.position = new Vector3(Mathf.PingPong(Time.time * zombieSpeed, 3.5f), transform.position.y, transform.position.z);
     }
 
     //Zombies move horizontally
@@ -68,5 +71,14 @@ public class Zombie : MonoBehaviour
     {
         transform.position = new Vector3(Mathf.PingPong(Time.time * zombieSpeed, 3), transform.position.y, transform.position.z);
         transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.PingPong(Time.time * zombieSpeed, 3));
+    }
+
+    //Plays the attack noise if player hits a zombie, they're two types of audio for this
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            attackSound.Play();
+        }
     }
 }
